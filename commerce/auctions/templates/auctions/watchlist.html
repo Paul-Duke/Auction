@@ -1,0 +1,31 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+
+{% block body %}
+<div>
+    <h2>Активні аукціони</h2>    
+    <div class="auctions">
+        {% for auction in auctions %}
+          <span class="auction">
+            <h3><a href="{% url 'auction' auction.category auction.id %}">{{auction.nameStuff}}</a></h3> 
+            <label class="description">Опис товару:</label>
+            <p class="description__text">{{auction.descriptionStuff}}</p>
+            <label class="start__cost">Стартова вартість:</label>
+            <p>{{auction.initialPrice}} грн.</p>
+            <div>
+                <img src="{{ auction.imageStuff.url }}"  height="150px">
+            </div>
+            <div class="del__watchlist">
+                <form action="{% url 'del_from_watchlist' auction.category auction.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{ auction.id }}" name="auction">
+                    <input class="btn btn-primary" type="submit" value="Не відстежувати">
+                </form>
+            </div>
+          </span>
+        {% empty %}
+            <p> Немає доданих для відстежування аукціонів</p> 
+        {% endfor %}  
+    </div>
+</div>    
+{% endblock %}

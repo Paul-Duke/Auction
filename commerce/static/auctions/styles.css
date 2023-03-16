@@ -1,0 +1,23 @@
+body {
+    padding: 10px;
+    background-color:bisque;
+}
+header {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    position: relative;
+}
+
+header h1 {
+    font-size: 32px;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    width: 150px;
+}
+
+
+.nav {
+    margin-top: 40px;
+    display: flex;
+    
+}

@@ -1,0 +1,74 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<div class="description__auction">
+    <h3>{{ auction.nameStuff }}</h3>
+    {% if user.is_authenticated and auction.active == True %} 
+        {% if author_auction %}
+            <form class="watch" action="{% url 'close' auction.category auction.id %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" value="{{ auction.id }}" name="close">
+                <input class="btn btn-primary" type="submit" value="Закрити аукціон">
+            </form>
+        {% endif%}
+    {% endif %} 
+    <label class="description">Опис товару:</label>
+    <p class="auction__description">{{ auction.descriptionStuff }}</p>
+    <label class="start__cost">Стартова вартість:</label>
+    <p>{{ auction.initialPrice }} грн.</p>
+    <div>
+        <img src="{{ auction.imageStuff.url }}"  width="250px">
+    </div>
+    <div>
+        {% if bets %}
+            <label>Найбільша ставка за товар:</label>
+            <p>{{ max_bet }} грн.</p>
+        {% else %}
+            <p>Ніхто ще не зробив ставку за цей товар</p>    
+        {% endif %}
+    </div>
+    <div>
+        {% if winner_user %}
+            <p><strong>Вітаємо, Ви перемогли в цьому аукціоні! Цей товар тепер належить Вам!</strong></p>
+        {% endif %}
+    </div>
+    {% if user.is_authenticated and auction.active == True %}
+            {% if switch %}
+                <form action="{% url 'to_watchlist' auction.category auction.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{ auction.id }}" name="auction">
+                    <input class="btn btn-primary" type="submit" value="Відстежувати">
+                </form>
+            {% endif %}
+            <form action="{% url 'bet' auction.category auction.id %}" method="post">
+                {% csrf_token %}
+                <div class="bet">
+                    <label>Введіть величину ставки:</label>
+                    <input class="form-control bet__input" type="number" name="bet_number" min="{{ max_bet }}" step="0.01">
+                    <input  class="btn btn-primary" type="submit" value="Ставка">
+                </div>
+            </form>
+            <form action="{% url 'comment' auction.category auction.id %}" method="post">
+                {% csrf_token %}
+                <div class="comment">
+                    <label>Ваш коментар щодо товару:</label>
+                    <textarea class="form-control comment__input" name="comment_text" cols="30" rows="10" required></textarea>
+                    <input class="btn btn-primary" type="submit" value="Коментувати">
+                </div>
+            </form>
+    {% endif %}   
+    <div class="auction__comments">
+        {% for comment in comments %}
+        <div>
+            <h5 class="comment__from__user">{{ comment.userName }}</h5>
+            <p class="time">{{ comment.dateandtime }}</p>
+            <p class="text__comment">{{ comment.commentText }}</p>
+        </div>
+        {% empty %}
+        <div>
+            <p>Ніхто ще не прокоментував цей товар.</p>
+        </div>
+        {% endfor %}  
+    </div> 
+</div>     
+{% endblock %}

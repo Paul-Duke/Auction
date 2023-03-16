@@ -1,0 +1,36 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+
+{% block body %}
+<div class="create__auction">
+    <h2>Створити новий аукціон</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label>Введіть назву товару:</label>
+        <input class="form-control" type="text" name="nameStuff" maxlength="50" required>
+        <br>
+        <label>Наведіть короткий опис товару:</label>
+        <textarea class="form-control" name="descriptionStuff" cols="30" rows="10" required></textarea>
+        <br>
+        <label> Введіть початкову ціну товару:</label>
+        <input class="form-control" type="number" name="initialPrice" step="0.01"  min="0.01" required>
+        <br>
+        <label>Оберіть категорію зі списку:</label>
+        <select class="form-control" name="category" required>
+            {% for category in categories %}
+            <option value="{{ category.id }}">
+                {{ category }}
+            </option>
+            {% endfor %}
+        </select>
+        <br>
+        <div class="load__file">
+            <label>Завантажте фото товару:</label>
+            <input type="file" name="imageStuff" accept=".png, .jpg, .jpeg" required>
+        </div>
+        <br>
+        <span>{{error}}</span><br>
+        <button class="btn btn-primary" type="submit">Відкрити аукціон</button>
+    </form>
+</div>    
+{% endblock %}

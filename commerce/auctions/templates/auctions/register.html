@@ -1,0 +1,32 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <h2>Реєстрація</h2>
+
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+
+    <form action="{% url 'register' %}" method="post" class="register">
+        {% csrf_token %}
+        <div class="form-group">
+            <input class="form-control" autofocus type="text" name="username" placeholder="Ім'я користувача">
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="email" name="email" placeholder="Email адреса">
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="password" name="password" placeholder="Пароль">
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="password" name="confirmation" placeholder="Повторіть пароль">
+        </div>
+        <input class="btn btn-primary" type="submit" value="Реєстрація">
+    </form>
+    <div class="to__login">
+        <p>Вже маєте обліковий запис? </p>
+        <a href="{% url 'login' %}">Увійдійть в нього тут.</a>
+    </div>
+
+{% endblock %}

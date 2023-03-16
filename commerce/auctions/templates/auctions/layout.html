@@ -1,0 +1,90 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Аукціон 1001 дрібниця{% endblock %}</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
+    </head>
+    <body>
+      <header>
+       <img src="{% static 'auctions/auction-red-stamp.jpg' %}" alt="">
+       <div class="header">
+        <h1>АУКЦІОН 1001 ДРІБНИЦЯ</h1>
+        <div>
+            <div class="user">
+                {% if user.is_authenticated %}
+                    Ви увійшли як <strong>{{ user.username }}</strong>.
+                {% else %}
+                    Ви не увійшли в свій обліковий запис.
+                {% endif %}
+            </div>
+            <hr>
+        </div>
+       </div>
+      </header>
+      <main class="main">
+        <nav class="nav__conteiner">
+          <div class="nav" id="nav">
+            <div class="burger" onclick="toggleMobileMenu()">
+                <div class="burger__bar"></div>
+                <div class="burger__bar"></div>
+                <div class="burger__bar"></div>
+            </div>   
+            <a class="nav__item" href="{% url 'index' %}" style="text-decoration:{{ main_page }};">Головна сторінка</a>
+            {% if user.is_authenticated %}
+                <a class="nav__item" href="{% url 'logout' %}">Вийти</a>
+            {% else %}
+                <a class="nav__item" href="{% url 'login' %}" style="text-decoration:{{ enter_page }};">Увійти</a>
+                <a class="nav__item" href="{% url 'register' %}" style="text-decoration:{{ sign_up_page }};">Реєстрація</a>
+            {% endif %}
+            <a class="nav__item" href="{% url 'categories' %}" style="text-decoration:{{ category_page }};">Категорії</a>
+            {% if user.is_authenticated %}
+                <a class="nav__item" href="{% url 'watchlist' %}" style="text-decoration:{{ watchlist_page }};">Аукціони, що відстежуються {{ user.username }}</a>
+                <a class="nav__item" href="{% url 'create_auction' %}" style="text-decoration:{{ create_page }};">Створити новий аукціон</a>
+                <a class="nav__item" href="{% url 'auctions_history' %}" style="text-decoration:{{ history_page }};">Історія аукціонів</a>
+                <a class="nav__item" href="{% url 'achievements' %}" style="text-decoration:{{ achievement_page }};">Досягнення</a>
+            {% endif %}
+            <img class="nav__logo" src="{% static 'auctions/images (1).jpg' %}" alt="">
+          </div>  
+        </nav> 
+        <section class="conteiner">
+            {% block body %}
+            {% endblock %}
+        </section>
+        <footer class="footer">
+            <span class="footer__item">
+                <h3>Контакти</h3>
+                <p>(095) 000 00 00</p>
+                <p>(097) 000 00 00</p>
+                <p>Ми працюємо цілодобово!</p>
+            </span>
+            <span class="footer__socialweb">
+                <div>
+                    <a href="https://www.instagram.com/">
+                        <img class="social__network__image" src="{% static 'auctions/inst.png' %}" alt="Instagram">
+                    </a>
+                    <a href="https://www.facebook.com/">
+                        <img class="social__network__image" src="{% static 'auctions/fb.png' %}" alt="Facebook">
+                    </a>
+                    <a href="https://www.viber.com/ua/">
+                        <img class="social__network__image__viber" src="{% static 'auctions/viber.png' %}" alt="Viber">
+                    </a>
+                </div>
+                <p class="copyright">Copyright Ⓒ 2023</p>
+            </span>
+        </footer>
+      </main>
+      <script type="text/javascript">
+        const nav = document.getElementById('nav');
+
+        function toggleMobileMenu() {
+            nav.classList.toggle('open')
+        }
+    </script>
+    </body>
+</html>

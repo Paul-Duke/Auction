@@ -1,0 +1,35 @@
+{% extends "auctions/layout.html" %}
+
+
+{% block body %}
+    <div>
+        <h2>Досягнення</h2>
+        {% if auctions %}
+            <h3>Вітаю!!! Ви перемогли в наступних аукціонах:</h3>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+        {% endif %}
+        <div class="achievements">
+            <ol>
+            {% for auction in auctions %}
+                <li><span>
+                    <a href="{% url 'auction' auction.category auction.id %}">{{ auction.nameStuff }}</a>
+                    <p>Аукціон закрито: {{ auction.closeDatetime }}</p>
+                  </span>
+                </li>
+            {% empty %}
+                <p class="without__achievements">У Вас поки немає досягень.</p>
+            {% endfor %}
+            </ol>
+        </div>     
+    </div>
+    
+{% endblock %}

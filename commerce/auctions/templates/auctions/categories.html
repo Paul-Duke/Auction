@@ -1,0 +1,24 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+{% load mptt_tags %}
+  <div class="list">
+    <ul class="categories">
+        {% if categories %}
+            {% recursetree categories %}
+                <li class="category">
+                    <a href="{% url 'category' node.name %}"> {{ node.name }}</a>
+                    {% if not node.is_leaf_node %}
+                        <ul>
+                            <a href="{% url 'category' node.name %}">{{ children }}</a>
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endrecursetree %}
+       {% else %}
+            <p>Немає категорій</p>
+       {% endif %}
+    </ul>
+  </div>
+{% endblock %}
