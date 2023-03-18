@@ -348,7 +348,6 @@ hr {
   @media screen and (max-width: 480px) {
     body {
         font-size-adjust: 0.4;
-        overflow-x: hidden;
     }
     
     .nav .nav__item, .nav__logo {
@@ -460,12 +459,11 @@ hr {
         margin-left: 10px;
     }
     .auction__comments {
-        margin-left: -30px;
-        margin-right: -30px;
+        margin-top: 20px;
     }
 
     .description__auction h3 {
-        margin-top: 30px;
+        margin-top: 40px;
     }
 
     .achievements {
